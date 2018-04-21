@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.R;
 import com.example.mobsoft.f1gpcalendar.model.Race;
+import com.orm.SugarRecord;
 
 import java.util.List;
 
@@ -62,9 +63,16 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
 
     @Override
     public void showGrandsPrix(List<Race> races) {
-        for(Race race : races) {
-            Toast.makeText(getApplicationContext(), race.getRaceName(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), races.get(1).getRaceName(), Toast.LENGTH_LONG).show();
+        races.get(15).save();
+        List<Race> race = Race.listAll(Race.class);
+        String s = "";
+        for(Race r : race) {
+            Log.i("DB", "showGrandsPrix: " + r.getRaceName());
+            s += r.getRaceName();
+            s += "\n";
         }
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
     }
 
     @Override
