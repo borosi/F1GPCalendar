@@ -1,19 +1,10 @@
 package com.example.mobsoft.f1gpcalendar.network;
 
-import io.swagger.client.CollectionFormats.*;
-
+import com.example.mobsoft.f1gpcalendar.model.MRData;
 
 import retrofit2.Call;
-import retrofit2.http.*;
-
-import okhttp3.RequestBody;
-
-import io.swagger.client.model.MRData;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface GrandsPrixApi {
   
@@ -28,6 +19,5 @@ public interface GrandsPrixApi {
   Call<MRData> getGrandsPrix(
     @Path("id") Integer id
   );
-
   
 }
