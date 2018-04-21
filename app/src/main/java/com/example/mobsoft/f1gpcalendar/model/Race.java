@@ -1,45 +1,41 @@
 package com.example.mobsoft.f1gpcalendar.model;
 
 import java.util.Objects;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.Circuit;
 import java.util.Date;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-
-
-
-@ApiModel(description = "")
 public class Race   {
   
   @SerializedName("season")
+  @Expose
   private Integer season = null;
   
   @SerializedName("round")
+  @Expose
   private Integer round = null;
   
   @SerializedName("url")
+  @Expose
   private String url = null;
   
   @SerializedName("raceName")
+  @Expose
   private String raceName = null;
   
   @SerializedName("circuit")
+  @Expose
   private Circuit circuit = null;
   
   @SerializedName("date")
+  @Expose
   private Date date = null;
   
   @SerializedName("time")
+  @Expose
   private String time = null;
-  
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Integer getSeason() {
     return season;
   }
@@ -47,10 +43,6 @@ public class Race   {
     this.season = season;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Integer getRound() {
     return round;
   }
@@ -58,10 +50,6 @@ public class Race   {
     this.round = round;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getUrl() {
     return url;
   }
@@ -69,10 +57,6 @@ public class Race   {
     this.url = url;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getRaceName() {
     return raceName;
   }
@@ -80,10 +64,6 @@ public class Race   {
     this.raceName = raceName;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Circuit getCircuit() {
     return circuit;
   }
@@ -91,10 +71,6 @@ public class Race   {
     this.circuit = circuit;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Date getDate() {
     return date;
   }
@@ -102,18 +78,12 @@ public class Race   {
     this.date = date;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getTime() {
     return time;
   }
   public void setTime(String time) {
     this.time = time;
   }
-
-  
 
   @Override
   public boolean equals(Object o) {

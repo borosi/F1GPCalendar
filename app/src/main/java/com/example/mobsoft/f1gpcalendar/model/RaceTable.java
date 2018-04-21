@@ -1,31 +1,23 @@
 package com.example.mobsoft.f1gpcalendar.model;
 
 import java.util.Objects;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.Race;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-
-
-@ApiModel(description = "")
 public class RaceTable   {
   
   @SerializedName("season")
+  @Expose
   private Integer season = null;
   
   @SerializedName("races")
+  @Expose
   private List<Race> races = new ArrayList<Race>();
-  
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Integer getSeason() {
     return season;
   }
@@ -33,18 +25,12 @@ public class RaceTable   {
     this.season = season;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public List<Race> getRaces() {
     return races;
   }
   public void setRaces(List<Race> races) {
     this.races = races;
   }
-
-  
 
   @Override
   public boolean equals(Object o) {

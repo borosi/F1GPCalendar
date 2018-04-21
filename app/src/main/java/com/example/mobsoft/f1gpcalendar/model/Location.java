@@ -1,34 +1,31 @@
 package com.example.mobsoft.f1gpcalendar.model;
 
 import java.util.Objects;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-
-
-@ApiModel(description = "")
 public class Location   {
   
   @SerializedName("lat")
+  @Expose
   private Double lat = null;
   
   @SerializedName("_long")
+  @Expose
   private Double _long = null;
   
   @SerializedName("locality")
+  @Expose
   private String locality = null;
   
   @SerializedName("country")
+  @Expose
   private String country = null;
   
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
+
   public Double getLat() {
     return lat;
   }
@@ -36,10 +33,6 @@ public class Location   {
     this.lat = lat;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Double getLong() {
     return _long;
   }
@@ -47,10 +40,6 @@ public class Location   {
     this._long = _long;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getLocality() {
     return locality;
   }
@@ -58,10 +47,6 @@ public class Location   {
     this.locality = locality;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getCountry() {
     return country;
   }

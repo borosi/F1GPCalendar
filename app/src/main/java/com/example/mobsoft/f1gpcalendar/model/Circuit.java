@@ -1,35 +1,31 @@
 package com.example.mobsoft.f1gpcalendar.model;
 
 import java.util.Objects;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.Location;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-
-
-@ApiModel(description = "")
 public class Circuit   {
   
   @SerializedName("circuitId")
+  @Expose
   private String circuitId = null;
   
   @SerializedName("url")
+  @Expose
   private String url = null;
   
   @SerializedName("circuitName")
+  @Expose
   private String circuitName = null;
   
   @SerializedName("location")
+  @Expose
   private Location location = null;
   
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getCircuitId() {
     return circuitId;
   }
@@ -38,9 +34,6 @@ public class Circuit   {
   }
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getUrl() {
     return url;
   }
@@ -49,9 +42,6 @@ public class Circuit   {
   }
 
   
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getCircuitName() {
     return circuitName;
   }
@@ -59,10 +49,6 @@ public class Circuit   {
     this.circuitName = circuitName;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Location getLocation() {
     return location;
   }

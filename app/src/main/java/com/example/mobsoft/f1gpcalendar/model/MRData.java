@@ -1,44 +1,42 @@
 package com.example.mobsoft.f1gpcalendar.model;
 
 import java.util.Objects;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.client.model.RaceTable;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-
-
-@ApiModel(description = "")
 public class MRData   {
   
   @SerializedName("xmlns")
+  @Expose
   private String xmlns = null;
   
   @SerializedName("series")
+  @Expose
   private String series = null;
   
   @SerializedName("url")
+  @Expose
   private String url = null;
   
   @SerializedName("limit")
+  @Expose
   private Integer limit = null;
   
   @SerializedName("offset")
+  @Expose
   private Integer offset = null;
   
   @SerializedName("total")
+  @Expose
   private Integer total = null;
   
   @SerializedName("raceTable")
+  @Expose
   private RaceTable raceTable = null;
   
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getXmlns() {
     return xmlns;
   }
@@ -46,10 +44,6 @@ public class MRData   {
     this.xmlns = xmlns;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getSeries() {
     return series;
   }
@@ -57,10 +51,6 @@ public class MRData   {
     this.series = series;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public String getUrl() {
     return url;
   }
@@ -68,10 +58,6 @@ public class MRData   {
     this.url = url;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Integer getLimit() {
     return limit;
   }
@@ -79,10 +65,6 @@ public class MRData   {
     this.limit = limit;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Integer getOffset() {
     return offset;
   }
@@ -90,10 +72,6 @@ public class MRData   {
     this.offset = offset;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public Integer getTotal() {
     return total;
   }
@@ -101,10 +79,6 @@ public class MRData   {
     this.total = total;
   }
 
-  
-  /**
-   **/
-  @ApiModelProperty(value = "")
   public RaceTable getRaceTable() {
     return raceTable;
   }
