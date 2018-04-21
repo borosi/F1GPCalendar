@@ -14,7 +14,7 @@ public class RaceTable   {
   @Expose
   private Integer season = null;
   
-  @SerializedName("races")
+  @SerializedName("Races")
   @Expose
   private List<Race> races = new ArrayList<Race>();
 

@@ -32,7 +32,7 @@ public class MRData   {
   @Expose
   private Integer total = null;
   
-  @SerializedName("raceTable")
+  @SerializedName("RaceTable")
   @Expose
   private RaceTable raceTable = null;
   
