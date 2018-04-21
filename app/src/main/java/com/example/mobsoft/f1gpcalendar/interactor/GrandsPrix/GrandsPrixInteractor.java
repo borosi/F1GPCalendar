@@ -6,6 +6,7 @@ import retrofit2.Response;
 
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.interactor.GrandsPrix.event.GetGrandsPrixEvent;
+import com.example.mobsoft.f1gpcalendar.model.GetSeasonDataResponse;
 import com.example.mobsoft.f1gpcalendar.model.MRData;
 import com.example.mobsoft.f1gpcalendar.network.GrandsPrixApi;
 
@@ -23,14 +24,14 @@ public class GrandsPrixInteractor {
     public void getGrandsPrix() {
         GetGrandsPrixEvent event = new GetGrandsPrixEvent();
         try {
-            Call<MRData> seasonQueryCall = grandsPrixApi.getGrandsPrix(2018);
+            Call<GetSeasonDataResponse> seasonQueryCall = grandsPrixApi.getGrandsPrix(2017);
 
-            Response<MRData> response = seasonQueryCall.execute();
+            Response<GetSeasonDataResponse> response = seasonQueryCall.execute();
             if (response.code() != 200) {
                 throw new Exception("Result code is not 200");
             }
             event.setCode(response.code());
-            event.setRaces(response.body().getRaceTable().getRaces());
+            event.setRaces(response.body().getMRData().getRaceTable().getRaces());
         } catch (Exception e) {
             event.setThrowable(e);
         } finally {

@@ -1,6 +1,6 @@
 package com.example.mobsoft.f1gpcalendar.network;
 
-import com.example.mobsoft.f1gpcalendar.model.MRData;
+import com.example.mobsoft.f1gpcalendar.model.GetSeasonDataResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -15,8 +15,8 @@ public interface GrandsPrixApi {
    * @return Call<MRData>
    */
   
-  @GET("api/f1/{id}")
-  Call<MRData> getGrandsPrix(
+  @GET("api/f1/{id}.json")
+  Call<GetSeasonDataResponse> getGrandsPrix(
     @Path("id") Integer id
   );
   

@@ -2,9 +2,13 @@ package com.example.mobsoft.f1gpcalendar.ui;
 
 import android.content.Context;
 
+import com.example.mobsoft.f1gpcalendar.di.Network;
 import com.example.mobsoft.f1gpcalendar.ui.guesses.GuessesPresenter;
 import com.example.mobsoft.f1gpcalendar.ui.main.MainPresenter;
 import com.example.mobsoft.f1gpcalendar.ui.newguess.NewGuessPresenter;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.inject.Singleton;
 
@@ -31,4 +35,9 @@ public class UIModule {
     @Provides
     @Singleton
     public NewGuessPresenter provideNewGuessPresenter() { return new NewGuessPresenter(); }
+
+    @Provides
+    @Singleton
+    @Network
+    public Executor provideNetworkExecutor(){ return Executors.newFixedThreadPool(1); }
 }
