@@ -1,13 +1,10 @@
-package com.example.mobsoft.f1gpcalendar.interactor.db;
+package com.example.mobsoft.f1gpcalendar.db;
 
 import com.example.mobsoft.f1gpcalendar.model.Guess;
 
 import java.util.List;
 
-import javax.inject.Singleton;
-
-@Singleton
-public class GuessDataSource {
+public class GuessDataSourceImpl implements GuessDataSource{
 
     public Guess getGuess(long id) {
         return Guess.findById(Guess.class, id);

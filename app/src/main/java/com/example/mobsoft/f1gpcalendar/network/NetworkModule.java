@@ -21,5 +21,5 @@ public class NetworkModule {
     @Singleton
     public GrandsPrixApi provideGrandPrixApi(Retrofit.Builder retrofitBuilder) {
         return retrofitBuilder.baseUrl(NetworkConfig.ENDPOINT_ADDRESS).build().create(GrandsPrixApi.class);
-    }
+}
 }
