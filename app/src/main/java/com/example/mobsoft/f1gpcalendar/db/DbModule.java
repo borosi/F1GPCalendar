@@ -9,5 +9,5 @@ import dagger.Provides;
 public class DbModule {
     @Provides
     @Singleton
-    public GuessDataSource provideGuessDataSource() { new GuessDataSourceImpl(); }
+    public GuessDataSource provideGuessDataSource() { return new GuessDataSourceImpl(); }
 }
