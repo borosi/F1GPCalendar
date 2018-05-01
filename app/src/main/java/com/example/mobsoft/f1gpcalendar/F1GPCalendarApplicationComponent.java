@@ -6,6 +6,8 @@ import com.example.mobsoft.f1gpcalendar.interactor.Guesses.GuessesInteractor;
 import com.example.mobsoft.f1gpcalendar.interactor.InteractorModule;
 import com.example.mobsoft.f1gpcalendar.network.NetworkModule;
 import com.example.mobsoft.f1gpcalendar.ui.UIModule;
+import com.example.mobsoft.f1gpcalendar.ui.guesses.GuessesFragment;
+import com.example.mobsoft.f1gpcalendar.ui.guesses.GuessesPresenter;
 import com.example.mobsoft.f1gpcalendar.ui.main.MainActivity;
 import com.example.mobsoft.f1gpcalendar.ui.main.MainFragment;
 import com.example.mobsoft.f1gpcalendar.ui.main.MainPresenter;
@@ -25,9 +27,13 @@ public interface F1GPCalendarApplicationComponent {
 
     void inject(MainPresenter mainPresenter);
 
+    void inject(GuessesPresenter guessesPresenter);
+
     void inject(NewGuessPresenter newGuessPresenter);
 
     void inject(MainFragment mainFragment);
+
+    void inject(GuessesFragment guessesFragment);
 
     void inject(NewGuessFragment newGuessFragment);
 }
