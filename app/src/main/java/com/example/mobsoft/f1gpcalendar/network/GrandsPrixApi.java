@@ -22,7 +22,7 @@ public interface GrandsPrixApi {
             @Path("id") Integer id
     );
 
-    @GET("api/f1/{id}.json")
+    @GET("api/f1/{id}/drivers.json")
     Call<GetDriversInSeasonData> getDriversInSeason(
             @Path("id") Integer id
     );
