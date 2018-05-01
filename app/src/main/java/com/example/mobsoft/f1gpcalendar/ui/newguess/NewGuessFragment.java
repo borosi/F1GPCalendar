@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.R;
 import com.example.mobsoft.f1gpcalendar.model.GetDriversInSeason.Driver;
+import com.example.mobsoft.f1gpcalendar.model.Guess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     private AutoCompleteTextView firstDriverName;
     private AutoCompleteTextView secondDriverName;
     private AutoCompleteTextView thirdDriverName;
+    private Button btnSaveGuess;
 
     private ArrayList<String> driversAutoComplete = new ArrayList<String>();
 
@@ -56,7 +60,32 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
         thirdDriverName = (AutoCompleteTextView) view.findViewById(R.id.thirdDriverName);
         thirdDriverName.setThreshold(1);
 
+        btnSaveGuess = (Button) view.findViewById(R.id.btnSaveGuess);
+//        btnSaveGuess.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                Driver first = getDriverByName(((EditText)firstDriverName).getText().toString());
+//                Driver second = getDriverByName(((EditText)secondDriverName).getText().toString());
+//                Driver third = getDriverByName(((EditText)thirdDriverName).getText().toString());
+//                if(first == null || second == null || third == null)
+//                    showSaveError("One of the names is invalid");
+//                Guess guess = new Guess();
+//                guess.setFirst(first);
+//                guess.setSecond(second);
+//                guess.setThird(third);
+//                newGuessPresenter.saveGuess(guess);
+//            }
+//        });
+
         return view;
+    }
+
+    private Driver getDriverByName(String name) {
+        for(Driver d : this.drivers) {
+            if((d.getGivenName() + " " + d.getFamilyName()).equalsIgnoreCase(name.trim()))
+                return d;
+        }
+        return null;
     }
 
     @Override
@@ -83,8 +112,8 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     }
 
     @Override
-    public void showSaveError() {
-        Toast.makeText(getContext(), "Error during save", Toast.LENGTH_LONG).show();
+    public void showSaveError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -104,75 +133,5 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
         firstDriverName.setAdapter(adapter);
         secondDriverName.setAdapter(adapter);
         thirdDriverName.setAdapter(adapter);
-    }
-
-    protected class DriversAdapter extends ArrayAdapter<Driver> {
-
-        private LayoutInflater layoutInflater;
-        private List<Driver> driversList;
-
-        private Filter filter = new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();
-
-                if(constraint != null){
-                    ArrayList<Driver> suggestions = new ArrayList<Driver>();
-                    for(Driver d : driversList){
-                        String name = d.getGivenName() + " " + d.getFamilyName();
-                        if(name.toLowerCase().contains(constraint.toString().toLowerCase())) {
-                            suggestions.add(d);
-                        }
-                    }
-
-                    results.values = suggestions;
-                    results.count = suggestions.size();
-                }
-
-                return results;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                clear();
-                if(results != null && results.count > 0)
-                    addAll((ArrayList<Driver>) results.values);
-                else
-                    addAll(driversList);
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public CharSequence convertResultToString(Object resultValue) {
-                Driver d = (Driver)resultValue;
-                return d.getGivenName() + " " + d.getFamilyName();
-            }
-        };
-
-        public DriversAdapter(@NonNull Context context, int textViewResourceId, @NonNull List<Driver> drivers) {
-            super(context, textViewResourceId, drivers);
-            driversList = new ArrayList<Driver>();
-            driversList.addAll(drivers);
-            layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-
-        @NonNull
-        @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            Driver driver = driversList.get(position);
-
-//            if(convertView == null)
-//                convertView = layoutInflater.inflate(, null);
-
-            ((AutoCompleteTextView)convertView.findViewById(R.id.firstDriverName)).setText(driver.getGivenName() + " " + driver.getFamilyName());
-
-            return convertView;
-        }
-
-        @NonNull
-        @Override
-        public Filter getFilter() {
-            return filter;
-        }
     }
 }

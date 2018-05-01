@@ -8,7 +8,7 @@ import java.util.List;
 public interface NewGuessScreen {
     void showSaveSuccess();
 
-    void showSaveError();
+    void showSaveError(String message);
 
     void showNetworkError(String message);
 
