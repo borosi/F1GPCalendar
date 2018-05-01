@@ -45,4 +45,7 @@ dependencies {
 
     //Sugar ORM
     compile 'com.github.satyan:sugar:1.3'
+
+    //Circle ImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }

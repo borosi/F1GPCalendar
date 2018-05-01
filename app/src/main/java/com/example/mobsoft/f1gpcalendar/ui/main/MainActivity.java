@@ -16,6 +16,7 @@ import android.view.View;
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.R;
 import com.example.mobsoft.f1gpcalendar.ui.guesses.GuessesFragment;
+import com.example.mobsoft.f1gpcalendar.ui.newguess.NewGuessFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        F1GPCalendarApplication.injector.inject(this);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("F1 GP Calendar");
         setSupportActionBar(toolbar);
@@ -39,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         sectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         sectionsPageAdapter.addFragment(new MainFragment(), "Races");
         sectionsPageAdapter.addFragment(new GuessesFragment(), "Guesses");
+        sectionsPageAdapter.addFragment(new NewGuessFragment(), "New guess");
 
         viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(sectionsPageAdapter);
