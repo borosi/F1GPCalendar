@@ -60,22 +60,22 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
         thirdDriverName = (AutoCompleteTextView) view.findViewById(R.id.thirdDriverName);
         thirdDriverName.setThreshold(1);
 
-        btnSaveGuess = (Button) view.findViewById(R.id.btnSaveGuess);
-//        btnSaveGuess.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                Driver first = getDriverByName(((EditText)firstDriverName).getText().toString());
-//                Driver second = getDriverByName(((EditText)secondDriverName).getText().toString());
-//                Driver third = getDriverByName(((EditText)thirdDriverName).getText().toString());
-//                if(first == null || second == null || third == null)
-//                    showSaveError("One of the names is invalid");
-//                Guess guess = new Guess();
-//                guess.setFirst(first);
-//                guess.setSecond(second);
-//                guess.setThird(third);
-//                newGuessPresenter.saveGuess(guess);
-//            }
-//        });
+        btnSaveGuess = (Button) view.findViewById(R.id.button2);
+        btnSaveGuess.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Driver first = getDriverByName(((EditText)firstDriverName).getText().toString());
+                Driver second = getDriverByName(((EditText)secondDriverName).getText().toString());
+                Driver third = getDriverByName(((EditText)thirdDriverName).getText().toString());
+                if(first == null || second == null || third == null)
+                    showSaveError("One of the names is invalid");
+                Guess guess = new Guess();
+                guess.setFirst(first);
+                guess.setSecond(second);
+                guess.setThird(third);
+                newGuessPresenter.saveGuess(guess);
+            }
+        });
 
         return view;
     }
@@ -133,5 +133,8 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
         firstDriverName.setAdapter(adapter);
         secondDriverName.setAdapter(adapter);
         thirdDriverName.setAdapter(adapter);
+
+        List<Guess> guesses = Guess.listAll(Guess.class);
+        Toast.makeText(getContext(), guesses.get(1).getFirst().getFamilyName(), Toast.LENGTH_LONG).show();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.mobsoft.f1gpcalendar.db;
 
+import android.util.Log;
+
 import com.example.mobsoft.f1gpcalendar.model.Guess;
 
 import java.util.List;
@@ -15,6 +17,9 @@ public class GuessDataSourceImpl implements GuessDataSource{
     }
 
     public void saveGuess(Guess guess) {
+        guess.getFirst().save();
+        guess.getSecond().save();
+        guess.getThird().save();
         guess.save();
     }
 
