@@ -1,33 +1,29 @@
 package com.example.mobsoft.f1gpcalendar.ui.main;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.R;
-import com.example.mobsoft.f1gpcalendar.model.Race;
+import com.example.mobsoft.f1gpcalendar.ui.guesses.GuessesFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity implements MainScreen {
-
-    @Inject
-    MainPresenter mainPresenter;
-
-    private List<Race> races;
-    private RacesAdapter racesAdapter;
-    private RecyclerView recyclerViewRaces;
+    private SectionsPageAdapter sectionsPageAdapter;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +33,18 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
         F1GPCalendarApplication.injector.inject(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("F1 GP Calendar");
         setSupportActionBar(toolbar);
 
-        recyclerViewRaces = (RecyclerView) findViewById(R.id.recyclerViewRaces);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerViewRaces.setLayoutManager(llm);
+        sectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+        sectionsPageAdapter.addFragment(new MainFragment(), "Races");
+        sectionsPageAdapter.addFragment(new GuessesFragment(), "Guesses");
 
-        races = new ArrayList<Race>();
-        racesAdapter = new RacesAdapter(this, races);
-        recyclerViewRaces.setAdapter(racesAdapter);
+        viewPager = (ViewPager) findViewById(R.id.container);
+        viewPager.setAdapter(sectionsPageAdapter);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -58,45 +56,36 @@ public class MainActivity extends AppCompatActivity implements MainScreen {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mainPresenter.attachScreen(this);
-    }
+    protected class SectionsPageAdapter extends FragmentPagerAdapter {
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mainPresenter.loadGrandsPrix();
-    }
+        private final List<Fragment> fragmentList;
+        private final List<String> fragmentTitleList;
 
-    @Override
-    protected void onStop() {
-        mainPresenter.detachScreen();
-        super.onStop();
-    }
+        public SectionsPageAdapter(FragmentManager fm) {
+            super(fm);
+            fragmentList = new ArrayList<Fragment>();
+            fragmentTitleList = new ArrayList<String>();
+        }
 
-    @Override
-    public void showGrandsPrix(List<Race> races) {
-        //Toast.makeText(getApplicationContext(), races.get(1).getRaceName(), Toast.LENGTH_LONG).show();
-//        races.get(15).save();
-//        List<Race> race = Race.listAll(Race.class);
-//        String s = "";
-//        for(Race r : race) {
-//            Log.i("DB", "showGrandsPrix: " + r.getRaceName());
-//            s += r.getRaceName();
-//            s += "\n";
-//        }
-        Log.d("RACE", "showGrandsPrix: " + races.size());
-        this.races.clear();
-        this.races.addAll(races);
-        racesAdapter.notifyDataSetChanged();
+        public void addFragment(Fragment fragment, String fragmentTitle) {
+            this.fragmentList.add(fragment);
+            this.fragmentTitleList.add(fragmentTitle);
+        }
 
-//        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-    }
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragmentTitleList.get(position);
+        }
 
-    @Override
-    public void showNetworkError(String errorMsg) {
-        Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
     }
 }

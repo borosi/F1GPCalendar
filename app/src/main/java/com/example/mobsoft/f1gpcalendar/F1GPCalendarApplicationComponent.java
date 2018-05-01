@@ -7,6 +7,7 @@ import com.example.mobsoft.f1gpcalendar.interactor.InteractorModule;
 import com.example.mobsoft.f1gpcalendar.network.NetworkModule;
 import com.example.mobsoft.f1gpcalendar.ui.UIModule;
 import com.example.mobsoft.f1gpcalendar.ui.main.MainActivity;
+import com.example.mobsoft.f1gpcalendar.ui.main.MainFragment;
 import com.example.mobsoft.f1gpcalendar.ui.main.MainPresenter;
 
 import javax.inject.Singleton;
@@ -23,4 +24,6 @@ public interface F1GPCalendarApplicationComponent {
     void inject(MainPresenter mainPresenter);
 
     void inject(MainActivity mainActivity);
+
+    void inject(MainFragment mainFragment);
 }
