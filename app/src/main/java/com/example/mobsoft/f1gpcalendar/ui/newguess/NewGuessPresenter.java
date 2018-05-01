@@ -7,14 +7,17 @@ import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.di.Network;
 import com.example.mobsoft.f1gpcalendar.interactor.GrandsPrix.GrandsPrixInteractor;
 import com.example.mobsoft.f1gpcalendar.interactor.GrandsPrix.event.GetDriversInSeasonEvent;
+import com.example.mobsoft.f1gpcalendar.interactor.GrandsPrix.event.GetGrandsPrixEvent;
 import com.example.mobsoft.f1gpcalendar.interactor.Guesses.GuessesInteractor;
 import com.example.mobsoft.f1gpcalendar.model.Guess;
+import com.example.mobsoft.f1gpcalendar.model.Race;
 import com.example.mobsoft.f1gpcalendar.ui.Presenter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Date;
 import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
@@ -57,6 +60,15 @@ public class NewGuessPresenter extends Presenter<NewGuessScreen> {
         });
     }
 
+    public void getNextRace() {
+        networkExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                grandsPrixInteractor.getGrandsPrix();
+            }
+        });
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final GetDriversInSeasonEvent event) {
         if (event.getThrowable() != null) {
@@ -67,6 +79,34 @@ public class NewGuessPresenter extends Presenter<NewGuessScreen> {
         } else {
             if (screen != null) {
                 screen.storeDrivers(event.getDrivers());
+            }
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final GetGrandsPrixEvent event) {
+        if (event.getThrowable() != null) {
+            event.getThrowable().printStackTrace();
+            if (screen != null) {
+                screen.showNetworkError(event.getThrowable().getMessage());
+            }
+        } else {
+            if (screen != null) {
+                Race nextRace = null;
+                for(Race r : event.getRaces()) {
+                    if(r.getDate().before(new Date())){
+                        continue;
+                    } else {
+                        nextRace = r;
+                        break;
+                    }
+                }
+
+                if(nextRace == null)
+                    screen.showNetworkError("Can't find next race.");
+                else
+                    screen.setNextRace(nextRace);
             }
         }
     }

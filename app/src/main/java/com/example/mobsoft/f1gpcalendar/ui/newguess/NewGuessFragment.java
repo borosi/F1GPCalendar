@@ -21,6 +21,7 @@ import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.R;
 import com.example.mobsoft.f1gpcalendar.model.GetDriversInSeason.Driver;
 import com.example.mobsoft.f1gpcalendar.model.Guess;
+import com.example.mobsoft.f1gpcalendar.model.Race;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +33,10 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     @Inject
     NewGuessPresenter newGuessPresenter;
 
+    private Race race;
     private List<Driver> drivers;
 
+    private TextView raceName;
     private AutoCompleteTextView firstDriverName;
     private AutoCompleteTextView secondDriverName;
     private AutoCompleteTextView thirdDriverName;
@@ -50,6 +53,8 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_guess, container, false);
+
+        raceName = (TextView) view.findViewById(R.id.raceName);
 
         firstDriverName = (AutoCompleteTextView) view.findViewById(R.id.firstDriverName);
         firstDriverName.setThreshold(1);
@@ -97,6 +102,7 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     @Override
     public void onResume() {
         super.onResume();
+        newGuessPresenter.getNextRace();
         newGuessPresenter.loadDrivers();
     }
 
@@ -122,6 +128,12 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     }
 
     @Override
+    public void setNextRace(Race nextRace) {
+        race = nextRace;
+        raceName.setText(race.getRaceName());
+    }
+
+    @Override
     public void storeDrivers(List<Driver> drivers) {
         this.drivers = drivers;
 
@@ -134,7 +146,7 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
         secondDriverName.setAdapter(adapter);
         thirdDriverName.setAdapter(adapter);
 
-        List<Guess> guesses = Guess.listAll(Guess.class);
-        Toast.makeText(getContext(), guesses.get(1).getFirst().getFamilyName(), Toast.LENGTH_LONG).show();
+//        List<Guess> guesses = Guess.listAll(Guess.class);
+//        Toast.makeText(getContext(), guesses.get(1).getFirst().getFamilyName(), Toast.LENGTH_LONG).show();
     }
 }
