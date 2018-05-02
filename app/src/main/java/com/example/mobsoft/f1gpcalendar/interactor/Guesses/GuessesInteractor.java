@@ -4,6 +4,7 @@ package com.example.mobsoft.f1gpcalendar.interactor.Guesses;
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.db.GuessDataSource;
 import com.example.mobsoft.f1gpcalendar.interactor.Guesses.event.QueryGuessesEvent;
+import com.example.mobsoft.f1gpcalendar.interactor.Guesses.event.SaveGuessSuccessfulEvent;
 import com.example.mobsoft.f1gpcalendar.model.Guess;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,12 +30,13 @@ public class GuessesInteractor {
     }
 
     public void saveGuess(Guess guess) {
+        SaveGuessSuccessfulEvent event = new SaveGuessSuccessfulEvent();
         try {
             guessDataSource.saveGuess(guess);
         } catch(Exception e) {
-
+            event.setThrowable(e);
         } finally {
-
+            EventBus.getDefault().post(event);
         }
     }
 }

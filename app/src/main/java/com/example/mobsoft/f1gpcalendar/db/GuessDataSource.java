@@ -10,7 +10,7 @@ public interface GuessDataSource {
 
     public List<Guess> getAllGuess();
 
-    public void saveGuess(Guess guess);
+    public void saveGuess(Guess guess) throws Exception;
 
     public void updateGuess(Guess newGuess);
 }

@@ -14,7 +14,8 @@ public class GuessDataSourceImpl implements GuessDataSource{
         return Guess.listAll(Guess.class);
     }
 
-    public void saveGuess(Guess guess) {
+    public void saveGuess(Guess guess) throws Exception {
+        if(guess == null) throw new Exception("Guess should not be null");
         guess.getRace().save();
         guess.getFirst().save();
         guess.getSecond().save();

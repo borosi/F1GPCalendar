@@ -1,14 +1,13 @@
 package com.example.mobsoft.f1gpcalendar.ui.newguess;
 
 
-import android.util.EventLog;
-
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.di.Network;
 import com.example.mobsoft.f1gpcalendar.interactor.GrandsPrix.GrandsPrixInteractor;
 import com.example.mobsoft.f1gpcalendar.interactor.GrandsPrix.event.GetDriversInSeasonEvent;
 import com.example.mobsoft.f1gpcalendar.interactor.GrandsPrix.event.GetGrandsPrixEvent;
 import com.example.mobsoft.f1gpcalendar.interactor.Guesses.GuessesInteractor;
+import com.example.mobsoft.f1gpcalendar.interactor.Guesses.event.SaveGuessSuccessfulEvent;
 import com.example.mobsoft.f1gpcalendar.model.Guess;
 import com.example.mobsoft.f1gpcalendar.model.Race;
 import com.example.mobsoft.f1gpcalendar.ui.Presenter;
@@ -83,6 +82,19 @@ public class NewGuessPresenter extends Presenter<NewGuessScreen> {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final SaveGuessSuccessfulEvent event) {
+        if (event.getThrowable() != null) {
+            event.getThrowable().printStackTrace();
+            if (screen != null) {
+                screen.showSaveError(event.getThrowable().getMessage());
+            }
+        } else {
+            if (screen != null) {
+                screen.showSaveSuccess();
+            }
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final GetGrandsPrixEvent event) {

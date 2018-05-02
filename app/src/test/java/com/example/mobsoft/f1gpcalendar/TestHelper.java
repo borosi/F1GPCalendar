@@ -5,10 +5,11 @@ import org.robolectric.shadows.ShadowLog;
 
 public class TestHelper {
 
-    public static void setTestInjector() {
+    public static TestComponent setTestInjector() {
         ShadowLog.stream = System.out;
         F1GPCalendarApplication application = (F1GPCalendarApplication) RuntimeEnvironment.application;
-        F1GPCalendarApplicationComponent injector = DaggerTestComponent.builder().testModule(new TestModule(application.getApplicationContext())).build();
+        TestComponent injector = DaggerTestComponent.builder().testModule(new TestModule(application.getApplicationContext())).build();
         application.injector = injector;
+        return injector;
     }
 }

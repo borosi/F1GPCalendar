@@ -55,18 +55,20 @@ public class MockGrandsPrixApi implements GrandsPrixApi {
 
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = dateFormat.parse("2018-03-25");
+            Date date = dateFormat.parse("2018-06-25");
             race.setDate(date);
         } catch (Exception e) {
-            race.setDate(new Date("2018-03-25"));
+            race.setDate(new Date("2018-06-25"));
         }
 
         race.setTime("05:10:00Z");
 
         List<Race> races = new ArrayList<Race>();
+        races.add(race);
         RaceTable raceTable = new RaceTable();
         raceTable.setSeason(2018);
         raceTable.setRaces(races);
+        mrData.setRaceTable(raceTable);
         result.setMRData(mrData);
 
         Call<GetSeasonDataResponse> call = new Call<GetSeasonDataResponse>() {
