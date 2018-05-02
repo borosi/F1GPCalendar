@@ -109,6 +109,8 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
 
         if(getActivity().getIntent().hasExtra("lastRaceSaved"))
             lastRaceSaved = getActivity().getIntent().getStringExtra("lastRaceSaved");
+        else
+            lastRaceSaved = "noguess";
         newGuessPresenter.attachScreen(this);
     }
 

@@ -99,7 +99,8 @@ public class GuessesFragment extends Fragment implements GuessesScreen {
     @Override
     public void showNewGuessScreen() {
         Intent intent = new Intent(getActivity(), NewGuessActivity.class);
-        intent.putExtra("lastRaceSaved", guessList.get(guessList.size() - 1).getRace().getRaceName());
+        if(guessList.size() > 0)
+            intent.putExtra("lastRaceSaved", guessList.get(guessList.size() - 1).getRace().getRaceName());
         startActivity(intent);
     }
 }

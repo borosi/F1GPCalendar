@@ -9,7 +9,7 @@ public class F1GPCalendarApplication extends SugarApp {
 
     @Override
     public void onCreate() {
-    if(false)
+//    if(false)
         super.onCreate();
 
         injector = DaggerF1GPCalendarApplicationComponent.builder().

@@ -28,7 +28,8 @@ public class GuessesPresenter extends Presenter<GuessesScreen> {
     public void attachScreen(GuessesScreen screen) {
         super.attachScreen(screen);
         F1GPCalendarApplication.injector.inject(this);
-        EventBus.getDefault().register(this);
+        if(!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
     }
 
     @Override

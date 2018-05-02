@@ -28,7 +28,8 @@ public class MainPresenter extends Presenter<MainScreen> {
     public void attachScreen(MainScreen screen) {
         super.attachScreen(screen);
         F1GPCalendarApplication.injector.inject(this);
-        EventBus.getDefault().register(this);
+        if(!EventBus.getDefault().isRegistered(this))
+            EventBus.getDefault().register(this);
     }
 
     @Override
