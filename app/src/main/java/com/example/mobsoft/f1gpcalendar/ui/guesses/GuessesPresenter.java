@@ -41,6 +41,10 @@ public class GuessesPresenter extends Presenter<GuessesScreen> {
         guessesInteractor.queryGuesses();
     }
 
+    public void showNewGuessScreen() {
+        screen.showNewGuessScreen();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final QueryGuessesEvent event) {
         if (event.getThrowable() != null) {

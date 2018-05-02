@@ -2,6 +2,7 @@ package com.example.mobsoft.f1gpcalendar.ui.newguess;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.example.mobsoft.f1gpcalendar.R;
 import com.example.mobsoft.f1gpcalendar.model.GetDriversInSeason.Driver;
 import com.example.mobsoft.f1gpcalendar.model.Guess;
 import com.example.mobsoft.f1gpcalendar.model.Race;
+import com.example.mobsoft.f1gpcalendar.ui.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     NewGuessPresenter newGuessPresenter;
 
     private Race race;
+    private String lastRaceSaved;
     private List<Driver> drivers;
 
     private TextView raceName;
@@ -72,13 +75,20 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
                 Driver first = getDriverByName(((EditText)firstDriverName).getText().toString());
                 Driver second = getDriverByName(((EditText)secondDriverName).getText().toString());
                 Driver third = getDriverByName(((EditText)thirdDriverName).getText().toString());
-                if(first == null || second == null || third == null)
+                if(first == null || second == null || third == null) {
                     showSaveError("One of the names is invalid");
-                Guess guess = new Guess();
-                guess.setFirst(first);
-                guess.setSecond(second);
-                guess.setThird(third);
-                newGuessPresenter.saveGuess(guess);
+                } else {
+                    Guess guess = new Guess();
+                    guess.setRace(race);
+                    guess.setFirst(first);
+                    guess.setSecond(second);
+                    guess.setThird(third);
+                    newGuessPresenter.saveGuess(guess);
+                }
+
+                //move to presenter method
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -96,6 +106,9 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        if(getActivity().getIntent().hasExtra("lastRaceSaved"))
+            lastRaceSaved = getActivity().getIntent().getStringExtra("lastRaceSaved");
         newGuessPresenter.attachScreen(this);
     }
 
@@ -130,6 +143,12 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     @Override
     public void setNextRace(Race nextRace) {
         race = nextRace;
+
+        if(race.getRaceName().equalsIgnoreCase(lastRaceSaved)) {
+            Toast.makeText(getContext(), "You have already guessed the results of the next race.", Toast.LENGTH_LONG).show();
+            btnSaveGuess.setEnabled(false);
+        }
+
         raceName.setText(race.getRaceName());
     }
 
@@ -145,8 +164,5 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
         firstDriverName.setAdapter(adapter);
         secondDriverName.setAdapter(adapter);
         thirdDriverName.setAdapter(adapter);
-
-//        List<Guess> guesses = Guess.listAll(Guess.class);
-//        Toast.makeText(getContext(), guesses.get(1).getFirst().getFamilyName(), Toast.LENGTH_LONG).show();
     }
 }

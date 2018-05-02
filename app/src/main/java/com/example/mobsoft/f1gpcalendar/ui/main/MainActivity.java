@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         sectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
         sectionsPageAdapter.addFragment(new MainFragment(), "Races");
         sectionsPageAdapter.addFragment(new GuessesFragment(), "Guesses");
-        sectionsPageAdapter.addFragment(new NewGuessFragment(), "New guess");
 
         viewPager = (ViewPager) findViewById(R.id.container);
         viewPager.setAdapter(sectionsPageAdapter);

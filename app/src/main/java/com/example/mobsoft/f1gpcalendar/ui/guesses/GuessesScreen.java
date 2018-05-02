@@ -9,4 +9,6 @@ public interface GuessesScreen {
     void showGuesses(List<Guess> guesses);
 
     void showError(String message);
+
+    void showNewGuessScreen();
 }
