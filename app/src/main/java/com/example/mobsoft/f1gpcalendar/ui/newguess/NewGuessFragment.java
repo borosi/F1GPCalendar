@@ -18,12 +18,15 @@ import android.widget.Filter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mobsoft.f1gpcalendar.AnalyticsApplication;
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.R;
 import com.example.mobsoft.f1gpcalendar.model.GetDriversInSeason.Driver;
 import com.example.mobsoft.f1gpcalendar.model.Guess;
 import com.example.mobsoft.f1gpcalendar.model.Race;
 import com.example.mobsoft.f1gpcalendar.ui.main.MainActivity;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +49,7 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     private Button btnSaveGuess;
 
     private ArrayList<String> driversAutoComplete = new ArrayList<String>();
+    private Tracker mTracker;
 
     public NewGuessFragment() {
         F1GPCalendarApplication.injector.inject(this);
@@ -86,11 +90,21 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
                     newGuessPresenter.saveGuess(guess);
                 }
 
+
+                mTracker.setScreenName("NewGuessFragment");
+                mTracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("SaveGuess")
+                        .build());
+
                 //move to presenter method
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 startActivity(intent);
             }
         });
+
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         return view;
     }
@@ -130,11 +144,23 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
     @Override
     public void showSaveSuccess() {
         Toast.makeText(getContext(), "Guess saved successfully", Toast.LENGTH_LONG).show();
+
+        mTracker.setScreenName("NewGuessFragment");
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("ActionResult")
+                .setAction("SaveSuccess")
+                .build());
     }
 
     @Override
     public void showSaveError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+
+        mTracker.setScreenName("NewGuessFragment");
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("ActionResult")
+                .setAction("SaveError")
+                .build());
     }
 
     @Override

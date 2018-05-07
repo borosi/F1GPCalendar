@@ -12,9 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.mobsoft.f1gpcalendar.AnalyticsApplication;
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.R;
 import com.example.mobsoft.f1gpcalendar.model.Race;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,7 @@ public class MainFragment extends Fragment implements MainScreen {
     private List<Race> raceList;
     private RacesAdapter racesAdapter;
     private RecyclerView recyclerViewRaces;
+    private Tracker mTracker;
 
     public MainFragment() {
         F1GPCalendarApplication.injector.inject(this);
@@ -51,6 +55,10 @@ public class MainFragment extends Fragment implements MainScreen {
         racesAdapter = new RacesAdapter(getContext(), raceList);
         recyclerViewRaces.setAdapter(racesAdapter);
 
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
+
         return view;
     }
 
@@ -69,6 +77,9 @@ public class MainFragment extends Fragment implements MainScreen {
     public void onResume() {
         super.onResume();
         mainPresenter.loadGrandsPrix();
+
+        mTracker.setScreenName("MainFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

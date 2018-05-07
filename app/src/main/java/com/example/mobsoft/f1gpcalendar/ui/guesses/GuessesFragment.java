@@ -13,11 +13,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.mobsoft.f1gpcalendar.AnalyticsApplication;
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.R;
 import com.example.mobsoft.f1gpcalendar.model.Guess;
 import com.example.mobsoft.f1gpcalendar.ui.main.MainActivity;
 import com.example.mobsoft.f1gpcalendar.ui.newguess.NewGuessActivity;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ public class GuessesFragment extends Fragment implements GuessesScreen {
     private GuessesAdapter guessesAdapter;
     private RecyclerView recyclerViewGuesses;
     private Button btnGuessNextRace;
+    private Tracker mTracker;
 
     public GuessesFragment() {
         F1GPCalendarApplication.injector.inject(this);
@@ -62,6 +66,9 @@ public class GuessesFragment extends Fragment implements GuessesScreen {
             }
         });
 
+        // Obtain the shared Tracker instance.
+        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
+        mTracker = application.getDefaultTracker();
 
         return view;
     }
@@ -76,6 +83,9 @@ public class GuessesFragment extends Fragment implements GuessesScreen {
     public void onResume() {
         super.onResume();
         guessesPresenter.queryGuesses();
+
+        mTracker.setScreenName("GuessFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
