@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.mobsoft.f1gpcalendar.AnalyticsApplication;
 import com.example.mobsoft.f1gpcalendar.F1GPCalendarApplication;
 import com.example.mobsoft.f1gpcalendar.R;
@@ -24,6 +25,8 @@ import com.google.android.gms.analytics.Tracker;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.fabric.sdk.android.Fabric;
+
 public class MainActivity extends AppCompatActivity {
 
     private SectionsPageAdapter sectionsPageAdapter;
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Fabric.with(this, new Crashlytics());
+
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -86,6 +86,7 @@ public class GuessesFragment extends Fragment implements GuessesScreen {
 
         mTracker.setScreenName("GuessFragment");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+//        throw new RuntimeException("This is a crash");
     }
 
     @Override

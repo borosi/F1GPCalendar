@@ -42,6 +42,10 @@
         <activity
             android:name=".ui.newguess.NewGuessActivity"
             android:label="@string/title_activity_new_guess"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ad2f6f230469da012c69014d4415d8468e616521"
+            />
     </application>
 
 </manifest>
