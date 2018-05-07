@@ -133,6 +133,9 @@ public class NewGuessFragment extends Fragment implements NewGuessScreen {
         super.onResume();
         newGuessPresenter.getNextRace();
         newGuessPresenter.loadDrivers();
+
+        mTracker.setScreenName("NewGuessFragment");
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
